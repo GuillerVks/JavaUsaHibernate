@@ -6,7 +6,8 @@
 
 package javausahibernate;
 
-import org.hibernate.Session;
+import java.util.*;
+import org.hibernate.*;
 import pojos.*;
 
 /**
@@ -33,5 +34,20 @@ public class ManagerEmpleados {
         ses.beginTransaction();
         ses.delete(em);
         ses.getTransaction().commit();
+    }
+    
+    public void updateEmpleado(Empleado em)
+    {
+        Session ses = HibernateUtil.getSessionFactory().getCurrentSession();
+        ses.beginTransaction();
+        ses.update(em);
+        ses.getTransaction().commit();
+    }
+    
+    public Collection<Empleado> getAllEmpleados(){
+        Session ses = HibernateUtil.getSessionFactory().getCurrentSession();
+        Query q = ses.createQuery("from Empleados");
+        List<Empleado> emple = q.list();
+        return emple;
     }
 }
